@@ -16,8 +16,7 @@ export class WordsHolderComponent implements OnInit {
   constructor(private wordsService: WordsService) {}
 
   ngOnInit(): void {
-    let words = this.wordsService.getWords(5);
-    this.words$ = words.pipe(
+    this.words$ = this.wordsService.getWords(5).pipe(
       map((words: string[]) =>
         words.map((word: string) => ({
           guessed: false,
