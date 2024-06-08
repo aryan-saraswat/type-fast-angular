@@ -1,5 +1,6 @@
-import { AsyncPipe, NgFor } from '@angular/common';
+import { AsyncPipe, NgClass, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Observable, map } from 'rxjs';
 import { WordEntry } from '../../common/word-entry';
 import { WordsService } from '../../services/words-service';
@@ -7,12 +8,14 @@ import { WordsService } from '../../services/words-service';
 @Component({
   selector: 'app-words-holder',
   standalone: true,
-  imports: [AsyncPipe, NgFor],
+  imports: [AsyncPipe, NgFor, ReactiveFormsModule, NgClass],
   templateUrl: './words-holder.component.html',
   styleUrl: './words-holder.component.scss',
 })
 export class WordsHolderComponent implements OnInit {
+  enteredWordControl = new FormControl('');
   words$ = new Observable<WordEntry[]>();
+
   constructor(private wordsService: WordsService) {}
 
   ngOnInit(): void {
@@ -27,7 +30,5 @@ export class WordsHolderComponent implements OnInit {
     ) as Observable<WordEntry[]>;
   }
 
-  onTextChange($event: Event) {
-    console.log(($event.target as HTMLInputElement).value);
-  }
+  onTextChange() {}
 }

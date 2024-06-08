@@ -1,6 +1,14 @@
 <div class="grid">
-  <div class="container" *ngFor="let word of words$ | async">
-    <p>{{ word.word }}</p>
+  <div class="container">
+    <div *ngFor="let word of words$ | async">
+      <div [ngClass]="word.guessedCorrectly ? 'correctWord' : 'wrongWord'">
+        {{ word.word }}
+      </div>
+    </div>
   </div>
-  <input type="text" (input)="onTextChange($event)" />
+  <input
+    type="text"
+    (input)="onTextChange()"
+    [formControl]="enteredWordControl"
+  />
 </div>
