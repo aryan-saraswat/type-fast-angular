@@ -1,3 +1,6 @@
-<div class="container">
-  <p>{{ words | async }}</p>
+<div class="grid">
+  <div class="container" *ngFor="let word of words$ | async">
+    <p>{{ word.word }}</p>
+  </div>
+  <input type="text" (input)="onTextChange($event)" />
 </div>

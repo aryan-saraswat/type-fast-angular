@@ -1,21 +1,34 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
+import { WordEntry } from '../../common/word-entry';
 import { WordsService } from '../../services/words-service';
 
 @Component({
   selector: 'app-words-holder',
   standalone: true,
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, NgFor],
   templateUrl: './words-holder.component.html',
   styleUrl: './words-holder.component.scss',
 })
 export class WordsHolderComponent implements OnInit {
-  words = new Observable<String[]>();
+  words$ = new Observable<WordEntry[]>();
   constructor(private wordsService: WordsService) {}
 
   ngOnInit(): void {
-    console.log('bruh');
-    this.words = this.wordsService.getWords(5);
+    let words = this.wordsService.getWords(5);
+    this.words$ = words.pipe(
+      map((words: string[]) =>
+        words.map((word: string) => ({
+          guessed: false,
+          guessedCorrectly: false,
+          word: word,
+        }))
+      )
+    ) as Observable<WordEntry[]>;
+  }
+
+  onTextChange($event: Event) {
+    console.log(($event.target as HTMLInputElement).value);
   }
 }
