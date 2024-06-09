@@ -28,8 +28,8 @@ export class WordsHolderComponent implements OnInit {
           word: word,
         }))
       ),
-      shareReplay(1)
-    ) as Observable<WordEntry[]>;
+      shareReplay()
+    );
 
     this.words$.subscribe((wordEntries) => {
       this.wordsService.currentWords = wordEntries;
