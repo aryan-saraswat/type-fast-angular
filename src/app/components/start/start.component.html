@@ -1,0 +1,13 @@
+<p-card header="Instructions">
+  <p class="m-0">
+    Welcome! Choose the number of words at a time you want to see :D
+  </p>
+</p-card>
+<p-inputNumber
+  [(ngModel)]="value4"
+  inputId="minmax"
+  mode="decimal"
+  [min]="5"
+  [max]="100"
+/>
+<p-button label="Submit" (onClick)="onSubmitClick()" />

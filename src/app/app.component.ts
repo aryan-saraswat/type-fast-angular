@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { WordsHolderComponent } from './components/words-holder/words-holder.component';
 import { WordsService } from './services/words-service';
 
@@ -8,12 +8,15 @@ import { WordsService } from './services/words-service';
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  imports: [RouterOutlet, WordsHolderComponent],
+  imports: [RouterOutlet, WordsHolderComponent, RouterLink],
 })
 export class AppComponent {
   title = 'type-fast-angular';
 
-  constructor(private wordsService: WordsService) {}
+  constructor(private wordsService: WordsService, private router: Router) {}
 
-  onClick() {}
+  onButtonClick() {
+    console.log('button clicked');
+    this.router.navigate(['game']);
+  }
 }

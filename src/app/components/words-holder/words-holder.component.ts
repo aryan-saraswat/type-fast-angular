@@ -19,7 +19,11 @@ export class WordsHolderComponent implements OnInit {
   constructor(private wordsService: WordsService) {}
 
   ngOnInit(): void {
-    this.words$ = this.wordsService.getWords(5).pipe(
+    this.fetchNewWords();
+  }
+
+  fetchNewWords() {
+    this.words$ = this.wordsService.getWords().pipe(
       tap((words: string[]) => console.log('working with ', words)),
       map((words: string[]) =>
         words.map((word: string) => ({
@@ -34,12 +38,11 @@ export class WordsHolderComponent implements OnInit {
     this.words$.subscribe((wordEntries) => {
       this.wordsService.currentWords = wordEntries;
     });
+
+    this.wordsService.indexToCheck = 0;
   }
 
-  onTextChange() {
-    let enteredText = this.enteredWordControl.value;
-    let wordToCheck =
-      this.wordsService.currentWords[this.wordsService.indexToCheck];
+  checkEnteredText(enteredText: string | null, wordToCheck: WordEntry) {
     if (enteredText?.endsWith(' ')) {
       if (
         enteredText.trim().toLowerCase() ===
@@ -52,6 +55,9 @@ export class WordsHolderComponent implements OnInit {
         };
         this.enteredWordControl.setValue('');
         this.wordsService.indexToCheck += 1;
+        if (this.wordsService.indexToCheck >= this.wordsService.numberOfWords) {
+          this.fetchNewWords();
+        }
       } else {
         this.wordsService.currentWords[this.wordsService.indexToCheck] = {
           ...this.wordsService.currentWords[this.wordsService.indexToCheck],
@@ -60,5 +66,12 @@ export class WordsHolderComponent implements OnInit {
         };
       }
     }
+  }
+
+  onTextChange() {
+    let enteredText = this.enteredWordControl.value;
+    let wordToCheck =
+      this.wordsService.currentWords[this.wordsService.indexToCheck];
+    this.checkEnteredText(enteredText, wordToCheck);
   }
 }

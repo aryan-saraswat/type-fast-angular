@@ -10,11 +10,12 @@ export class WordsService {
   api = 'http://localhost:8080';
   currentWords: WordEntry[] = [];
   indexToCheck: number = 0;
+  numberOfWords: number = 5;
   constructor(private httpClient: HttpClient) {}
 
-  getWords(numberOfWords: Number): Observable<string[]> {
+  getWords(): Observable<string[]> {
     return this.httpClient.post(`${this.api}/hello`, {
-      numberOfWords: numberOfWords,
+      numberOfWords: this.numberOfWords,
     }) as Observable<string[]>;
   }
 }
