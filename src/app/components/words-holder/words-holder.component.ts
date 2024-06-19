@@ -1,25 +1,48 @@
 import { AsyncPipe, NgClass, NgFor } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { CardModule } from 'primeng/card';
+import { SplitterModule } from 'primeng/splitter';
 import { Observable, map, shareReplay, tap } from 'rxjs';
 import { WordEntry } from '../../common/word-entry';
+import { ScoreService } from '../../services/score.service';
 import { WordsService } from '../../services/words-service';
 
 @Component({
   selector: 'app-words-holder',
   standalone: true,
-  imports: [AsyncPipe, NgFor, ReactiveFormsModule, NgClass],
+  imports: [
+    AsyncPipe,
+    NgFor,
+    ReactiveFormsModule,
+    NgClass,
+    CardModule,
+    SplitterModule,
+  ],
   templateUrl: './words-holder.component.html',
   styleUrl: './words-holder.component.scss',
 })
-export class WordsHolderComponent implements OnInit {
+export class WordsHolderComponent implements OnInit, OnDestroy {
   enteredWordControl = new FormControl('');
   words$ = new Observable<WordEntry[]>();
+  totalAttempts: number = 0;
+  correctAttempts: number = 0;
 
-  constructor(private wordsService: WordsService) {}
+  constructor(
+    private wordsService: WordsService,
+    private scoreService: ScoreService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.fetchNewWords();
+    this.scoreService.totalAttempts$.subscribe(
+      (value) => (this.totalAttempts = value)
+    );
+    this.scoreService.correctAttempts$.subscribe(
+      (value) => (this.correctAttempts = value)
+    );
   }
 
   fetchNewWords() {
@@ -53,7 +76,7 @@ export class WordsHolderComponent implements OnInit {
           guessed: true,
           guessedCorrectly: true,
         };
-        this.enteredWordControl.setValue('');
+        this.scoreService.correctAttempts$.next(this.correctAttempts + 1);
         this.wordsService.indexToCheck += 1;
         if (this.wordsService.indexToCheck >= this.wordsService.numberOfWords) {
           this.fetchNewWords();
@@ -65,6 +88,8 @@ export class WordsHolderComponent implements OnInit {
           guessedCorrectly: false,
         };
       }
+      this.scoreService.totalAttempts$.next(this.totalAttempts + 1);
+      this.enteredWordControl.setValue('');
     }
   }
 
@@ -73,5 +98,13 @@ export class WordsHolderComponent implements OnInit {
     let wordToCheck =
       this.wordsService.currentWords[this.wordsService.indexToCheck];
     this.checkEnteredText(enteredText, wordToCheck);
+  }
+
+  finishGame() {
+    this.router.navigate(['results']);
+  }
+
+  ngOnDestroy(): void {
+    this.scoreService.totalAttempts$.unsubscribe;
   }
 }

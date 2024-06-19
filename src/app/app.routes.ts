@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import { GameAreaComponent } from './components/game-area/game-area.component';
+import { GamePageComponent } from './components/game-page/game-page.component';
+import { ResultsComponent } from './components/results/results.component';
 import { StartComponent } from './components/start/start.component';
 
 export const routes: Routes = [
@@ -8,7 +9,8 @@ export const routes: Routes = [
     path: 'home',
     component: AppComponent,
   },
-  { path: 'game', component: GameAreaComponent },
+  { path: 'game', component: GamePageComponent },
   { path: 'start', component: StartComponent },
+  { path: 'results', component: ResultsComponent },
   { path: '', redirectTo: '/start', pathMatch: 'full' },
 ];
