@@ -23,6 +23,11 @@
   <div>Attempts: {{ totalAttempts }}</div>
   <div>Correct: {{ correctAttempts }}</div>
   <div>
+    <button (click)="startGame()">Start Game</button
+    ><button (click)="pauseGame()">Pause Game</button>
+    <p>Elapsed time: {{ elapsedTime }}</p>
+  </div>
+  <div>
     <button (click)="finishGame()">Finish game</button>
   </div>
 </div>

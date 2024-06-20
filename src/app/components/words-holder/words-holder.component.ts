@@ -7,6 +7,7 @@ import { SplitterModule } from 'primeng/splitter';
 import { Observable, map, shareReplay, tap } from 'rxjs';
 import { WordEntry } from '../../common/word-entry';
 import { ScoreService } from '../../services/score.service';
+import { TimekeeperService } from '../../services/timekeeper.service';
 import { WordsService } from '../../services/words-service';
 
 @Component({
@@ -28,10 +29,12 @@ export class WordsHolderComponent implements OnInit, OnDestroy {
   words$ = new Observable<WordEntry[]>();
   totalAttempts: number = 0;
   correctAttempts: number = 0;
+  elapsedTime: number = 0;
 
   constructor(
     private wordsService: WordsService,
     private scoreService: ScoreService,
+    private timekeeper: TimekeeperService,
     private router: Router
   ) {}
 
@@ -42,6 +45,9 @@ export class WordsHolderComponent implements OnInit, OnDestroy {
     );
     this.scoreService.correctAttempts$.subscribe(
       (value) => (this.correctAttempts = value)
+    );
+    this.timekeeper.currentTime$.subscribe(
+      (value) => (this.elapsedTime = value)
     );
   }
 
@@ -100,11 +106,20 @@ export class WordsHolderComponent implements OnInit, OnDestroy {
     this.checkEnteredText(enteredText, wordToCheck);
   }
 
+  startGame() {
+    this.timekeeper.startTimer();
+  }
+
+  pauseGame() {
+    this.timekeeper.pauseTimer();
+  }
+
   finishGame() {
     this.router.navigate(['results']);
   }
 
   ngOnDestroy(): void {
     this.scoreService.totalAttempts$.unsubscribe;
+    this.timekeeper.currentTime$.unsubscribe;
   }
 }
