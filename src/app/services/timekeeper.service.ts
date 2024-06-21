@@ -23,4 +23,9 @@ export class TimekeeperService {
     this.play = false;
     clearInterval(this.interval);
   }
+
+  endTimer() {
+    this.play = false;
+    clearInterval(this.interval);
+  }
 }

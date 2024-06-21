@@ -20,12 +20,12 @@ import { WordsService } from '../../services/words-service';
   styleUrl: './start.component.scss',
 })
 export class StartComponent {
-  value4: number = 5;
+  displayedWords: number = 5;
 
   constructor(private router: Router, private wordsService: WordsService) {}
 
   onSubmitClick() {
-    this.wordsService.numberOfWords = this.value4;
+    this.wordsService.numberOfWords = this.displayedWords;
     this.router.navigate(['game']);
   }
 }
