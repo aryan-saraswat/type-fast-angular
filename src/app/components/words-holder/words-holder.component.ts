@@ -9,6 +9,7 @@ import { WordEntry } from '../../common/word-entry';
 import { ScoreService } from '../../services/score.service';
 import { TimekeeperService } from '../../services/timekeeper.service';
 import { WordsService } from '../../services/words-service';
+import { ScoreboardComponent } from '../scoreboard/scoreboard.component';
 
 @Component({
   selector: 'app-words-holder',
@@ -20,6 +21,7 @@ import { WordsService } from '../../services/words-service';
     NgClass,
     CardModule,
     SplitterModule,
+    ScoreboardComponent,
   ],
   templateUrl: './words-holder.component.html',
   styleUrl: './words-holder.component.scss',
@@ -45,9 +47,6 @@ export class WordsHolderComponent implements OnInit, OnDestroy {
     );
     this.scoreService.correctAttempts$.subscribe(
       (value) => (this.correctAttempts = value)
-    );
-    this.timekeeper.currentTime$.subscribe(
-      (value) => (this.elapsedTime = value)
     );
   }
 
@@ -120,6 +119,6 @@ export class WordsHolderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.scoreService.totalAttempts$.unsubscribe;
-    this.timekeeper.currentTime$.unsubscribe;
+    this.scoreService.correctAttempts$.unsubscribe;
   }
 }
