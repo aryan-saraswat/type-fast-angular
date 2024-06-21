@@ -1,8 +1,12 @@
-<p>Total attempts: {{ totalAttempts }}</p>
-<p>Correct attempts: {{ correctAttempts }}</p>
-<p>Accuracy: {{ accuracy }}</p>
-<div *ngIf="totalAttempts > 0">
-  <div class="small-chart">
-    <p-chart type="doughnut" [data]="data" [options]="options" />
+<div style="height: 300px">
+  <div style="float: left" class="width-50">
+    <p>Total attempts: {{ totalAttempts }}</p>
+    <p>Correct attempts: {{ correctAttempts }}</p>
+    <p>Accuracy: {{ accuracy }}</p>
+  </div>
+  <div class="small-chart width-50" *ngIf="totalAttempts > 0">
+    <div>
+      <p-chart type="doughnut" [data]="data" [options]="options" />
+    </div>
   </div>
 </div>

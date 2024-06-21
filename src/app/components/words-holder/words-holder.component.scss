@@ -2,17 +2,24 @@
     color: black;
 }
 
-.container {
+.grid {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+    
+.words-container {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     font-size: 30px;
 }
 
-.grid {
-    display:flex;
-    flex-direction: column;
+.input-container {
+    display: flex;
+    flex-direction: row;
     justify-content: space-evenly;
+    font-size: 30px;
 }
 
 .correctWord {
@@ -26,4 +33,8 @@
 .words-box {
     font-size: large;
     height: 300px;
+}
+
+.word {
+    margin-right: 10px;
 }

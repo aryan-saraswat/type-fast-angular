@@ -1,24 +1,19 @@
 <div class="grid">
-  <div class="container"></div>
-  <p-splitter styleClass="mb-5">
-    <ng-template pTemplate>
-      <div class="words-box col flex align-items-center justify-content-center">
-        <div *ngFor="let word of words$ | async">
-          <div [ngClass]="word.guessedCorrectly ? 'correctWord' : 'wrongWord'">
-            {{ word.word }}
-          </div>
-        </div>
+  <div class="words-container">
+    <div *ngFor="let word of words$ | async" class="word">
+      <div [ngClass]="word.guessedCorrectly ? 'correctWord' : 'wrongWord'">
+        {{ word.word }}
       </div>
-    </ng-template>
-    <ng-template pTemplate>
-      <div class="col flex align-items-center justify-content-center">
-        <input
-          type="text"
-          (input)="onTextChange()"
-          [formControl]="enteredWordControl"
-        />
-      </div>
-    </ng-template>
-  </p-splitter>
+    </div>
+  </div>
+  <div class="input-container">
+    <div>
+      <input
+        type="text"
+        (input)="onTextChange()"
+        [formControl]="enteredWordControl"
+      />
+    </div>
+  </div>
   <app-scoreboard></app-scoreboard>
 </div>

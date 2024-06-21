@@ -16,7 +16,7 @@ export class ResultsComponent {
   correctAttempts: number = this.scoreService.correctAttempts$.value;
   accuracy: string =
     this.totalAttempts > 0
-      ? `${(this.correctAttempts / this.totalAttempts) * 100}%`
+      ? `${((this.correctAttempts / this.totalAttempts) * 100).toFixed(2)}%`
       : 'no words attempted';
   data: any = {
     labels: ['Correct attempts', 'Wrong attempts'],
