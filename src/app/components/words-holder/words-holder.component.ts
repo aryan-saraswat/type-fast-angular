@@ -32,6 +32,7 @@ export class WordsHolderComponent implements OnInit, OnDestroy {
   totalAttempts: number = 0;
   correctAttempts: number = 0;
   elapsedTime: number = 0;
+  gameActive: boolean = false;
 
   constructor(
     private wordsService: WordsService,
@@ -48,6 +49,13 @@ export class WordsHolderComponent implements OnInit, OnDestroy {
     this.scoreService.correctAttempts$.subscribe(
       (value) => (this.correctAttempts = value)
     );
+    this.scoreService.gameActive$.subscribe((value) => {
+      if (!value) {
+        this.enteredWordControl.disable();
+      } else {
+        this.enteredWordControl.enable();
+      }
+    });
   }
 
   fetchNewWords() {
@@ -104,20 +112,9 @@ export class WordsHolderComponent implements OnInit, OnDestroy {
     this.checkEnteredText(enteredText, wordToCheck);
   }
 
-  startGame() {
-    this.timekeeper.startTimer();
-  }
-
-  pauseGame() {
-    this.timekeeper.pauseTimer();
-  }
-
-  finishGame() {
-    this.router.navigate(['results']);
-  }
-
   ngOnDestroy(): void {
     this.scoreService.totalAttempts$.unsubscribe;
     this.scoreService.correctAttempts$.unsubscribe;
+    this.scoreService.gameActive$.unsubscribe;
   }
 }

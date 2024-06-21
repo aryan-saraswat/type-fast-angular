@@ -8,4 +8,5 @@ export class ScoreService {
   constructor() {}
   totalAttempts$ = new BehaviorSubject<number>(0);
   correctAttempts$ = new BehaviorSubject<number>(0);
+  gameActive$ = new BehaviorSubject<boolean>(false);
 }

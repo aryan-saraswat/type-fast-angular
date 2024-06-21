@@ -37,14 +37,17 @@ export class ScoreboardComponent implements OnInit, OnDestroy {
   }
 
   startGame() {
+    this.scoreService.gameActive$.next(true);
     this.timekeeper.startTimer();
   }
 
   pauseGame() {
+    this.scoreService.gameActive$.next(false);
     this.timekeeper.pauseTimer();
   }
 
   finishGame() {
+    this.scoreService.gameActive$.next(false);
     this.router.navigate(['results']);
   }
 
