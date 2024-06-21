@@ -4,7 +4,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { SplitterModule } from 'primeng/splitter';
-import { Observable, map, shareReplay, tap } from 'rxjs';
+import { Observable, map, shareReplay } from 'rxjs';
 import { WordEntry } from '../../common/word-entry';
 import { ScoreService } from '../../services/score.service';
 import { TimekeeperService } from '../../services/timekeeper.service';
@@ -52,7 +52,6 @@ export class WordsHolderComponent implements OnInit, OnDestroy {
 
   fetchNewWords() {
     this.words$ = this.wordsService.getWords().pipe(
-      tap((words: string[]) => console.log('working with ', words)),
       map((words: string[]) =>
         words.map((word: string) => ({
           guessed: false,
