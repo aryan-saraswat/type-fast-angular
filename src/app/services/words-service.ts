@@ -14,7 +14,7 @@ export class WordsService {
   constructor(private httpClient: HttpClient) {}
 
   getWords(): Observable<string[]> {
-    return this.httpClient.post(`${this.api}/hello`, {
+    return this.httpClient.post(`${this.api}/get-words`, {
       numberOfWords: this.numberOfWords,
     }) as Observable<string[]>;
   }
