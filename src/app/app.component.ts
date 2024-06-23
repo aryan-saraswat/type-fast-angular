@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { WordsHolderComponent } from './components/words-holder/words-holder.component';
-import { WordsService } from './services/words-service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +12,7 @@ import { WordsService } from './services/words-service';
 export class AppComponent {
   title = 'type-fast-angular';
 
-  constructor(private wordsService: WordsService, private router: Router) {}
+  constructor(private router: Router) {}
 
   onButtonClick() {
     console.log('button clicked');
