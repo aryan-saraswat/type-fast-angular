@@ -1,11 +1,10 @@
-import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { ScoreService } from '../../services/score.service';
 
 @Component({
   selector: 'app-results',
   standalone: true,
-  imports: [NgIf],
+  imports: [],
   templateUrl: './results.component.html',
   styleUrl: './results.component.scss',
 })

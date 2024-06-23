@@ -4,7 +4,9 @@
     <p>Correct attempts: {{ correctAttempts }}</p>
     <p>Accuracy: {{ accuracy }}</p>
   </div>
-  <div class="small-chart width-50" *ngIf="totalAttempts > 0">
+  @if (totalAttempts > 0) {
+  <div class="small-chart width-50">
     <div>[TODO] Insert pie chart</div>
   </div>
+  }
 </div>
