@@ -1,29 +1,26 @@
 import { Component } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { ListboxModule } from 'primeng/listbox';
+import { TimekeeperService } from '../../services/timekeeper.service';
 import { WordsService } from '../../services/words-service';
 
 @Component({
   selector: 'app-start',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    FormsModule,
-    InputNumberModule,
-    CardModule,
-    ButtonModule,
-    ListboxModule,
-  ],
+  imports: [ReactiveFormsModule, FormsModule],
   templateUrl: './start.component.html',
   styleUrl: './start.component.scss',
 })
 export class StartComponent {
   displayedWords: number = 5;
   selectedTime = 60;
+  formGroup: FormGroup;
   times = [
     {
       label: '60 seconds',
@@ -39,11 +36,31 @@ export class StartComponent {
     },
   ];
 
-  constructor(private router: Router, private wordsService: WordsService) {}
+  constructor(
+    private router: Router,
+    private wordsService: WordsService,
+    private formBuilder: FormBuilder,
+    private timekeeper: TimekeeperService
+  ) {
+    this.formGroup = this.formBuilder.group({
+      numberOfWords: [
+        5,
+        [Validators.min(5), Validators.max(15), Validators.required],
+      ],
+      time: [
+        60,
+        [Validators.min(30), Validators.max(120), Validators.required],
+      ],
+    });
+  }
 
   onSubmitClick() {
-    this.wordsService.numberOfWords = this.displayedWords;
-    this.router.navigate(['game']);
+    if (this.formGroup.valid) {
+      this.wordsService.numberOfWords =
+        this.formGroup.controls['numberOfWords'].value;
+      this.timekeeper.gameDuration = this.formGroup.controls['time'].value;
+      this.router.navigate(['game']);
+    }
   }
 
   onSelectTime() {

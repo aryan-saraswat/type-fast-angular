@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class TimekeeperService {
   constructor() {}
   currentTime$ = new BehaviorSubject<number>(0);
+  gameDuration: number = 60;
   interval: NodeJS.Timeout | undefined;
   play: boolean = false;
 

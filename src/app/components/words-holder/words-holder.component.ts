@@ -2,8 +2,6 @@ import { AsyncPipe, NgClass, NgFor } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CardModule } from 'primeng/card';
-import { SplitterModule } from 'primeng/splitter';
 import { Observable, map, shareReplay } from 'rxjs';
 import { WordEntry } from '../../common/word-entry';
 import { ScoreService } from '../../services/score.service';
@@ -19,8 +17,6 @@ import { ScoreboardComponent } from '../scoreboard/scoreboard.component';
     NgFor,
     ReactiveFormsModule,
     NgClass,
-    CardModule,
-    SplitterModule,
     ScoreboardComponent,
   ],
   templateUrl: './words-holder.component.html',

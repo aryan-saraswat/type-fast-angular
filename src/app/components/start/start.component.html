@@ -1,29 +1,14 @@
 <div class="start">
-  <p-card header="Instructions">
-    <p class="m-0">
-      Welcome! Choose the number of words at a time you want to see :D
-    </p>
-  </p-card>
+  <div style="padding: 50px">
+    Welcome! Choose the number of words at a time you want to see :D
+  </div>
   <div class="start">
     <div>
-      <p-inputNumber
-        [(ngModel)]="displayedWords"
-        inputId="minmax"
-        mode="decimal"
-        [min]="5"
-        [max]="15"
-      />
+      <form [formGroup]="formGroup">
+        <input type="text" formControlName="numberOfWords" />
+        <input type="text" formControlName="time" />
+        <button type="button" (click)="onSubmitClick()">Submit</button>
+      </form>
     </div>
-    <div>
-      <p-listbox
-        [options]="times"
-        [(ngModel)]="selectedTime"
-        optionLabel="label"
-        [style]="{ width: '15rem' }"
-        [listStyle]="{ 'max-height': '220px' }"
-        (onChange)="onSelectTime()"
-      />
-    </div>
-    <p-button label="Submit" (onClick)="onSubmitClick()" />
   </div>
 </div>
