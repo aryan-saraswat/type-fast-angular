@@ -1,3 +1,13 @@
+#Type fast!
+To run the project, you need the backend repository (Spring boot application) that's responsible for generating random words and sending them to the frontend. The backend repository can be found [here](https://github.com/aryan-saraswat/type-fast-backend). Clone the backend repository and run it, it will be available by default on port 8080.
+
+Test if the backend started by sending a POST request to http://localhost:8080/get-words with the body
+`{
+    "numberOfWords": 7
+}`
+
+If everything went well, you should see 7 random five-letter words every time you send the request.
+
 # TypeFastAngular
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.3.
