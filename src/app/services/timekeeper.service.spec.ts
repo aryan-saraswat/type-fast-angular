@@ -13,4 +13,26 @@ describe('TimekeeperService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should start the timer', (done) => {
+    service.startTimer();
+    expect(service.play).toBeTrue();
+
+    setTimeout(() => {
+      expect(service.currentTime$.value).toBeLessThan(60);
+      service.endTimer();
+      done();
+    }, 2000);
+  });
+
+  it('should end the timer and keep the value of the time', (done) => {
+    service.startTimer();
+
+    setTimeout(() => {
+      service.endTimer();
+      expect(service.play).toBeFalse();
+      expect(service.currentTime$.value).toEqual(58);
+      done();
+    }, 2000);
+  });
 });
