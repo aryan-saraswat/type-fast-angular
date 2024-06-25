@@ -6,8 +6,8 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class TimekeeperService {
   constructor() {}
-  currentTime$ = new BehaviorSubject<number>(0);
   gameDuration: number = 60;
+  currentTime$ = new BehaviorSubject<number>(this.gameDuration);
   interval: NodeJS.Timeout | undefined;
   play: boolean = false;
 
@@ -15,7 +15,7 @@ export class TimekeeperService {
     if (!this.play) {
       this.play = true;
       this.interval = setInterval(() => {
-        this.currentTime$.next(this.currentTime$.value + 1);
+        this.currentTime$.next(this.currentTime$.value - 1);
       }, 1000);
     }
   }
