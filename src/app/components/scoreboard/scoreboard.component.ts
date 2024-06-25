@@ -24,7 +24,7 @@ export class ScoreboardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.timekeeper.currentTime$.subscribe((value) => {
       this.elapsedTime = value;
-      if (this.elapsedTime === 60) {
+      if (this.elapsedTime === 0) {
         this.finishGame();
       }
     });
