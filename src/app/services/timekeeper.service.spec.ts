@@ -25,12 +25,16 @@ describe('TimekeeperService', () => {
     }, 2000);
   });
 
-  it('should end the timer and keep the value of the time', (done) => {
+  it('should end the timer and stop changing the value of the time', (done) => {
     service.startTimer();
 
     setTimeout(() => {
       service.endTimer();
       expect(service.play).toBeFalse();
+      expect(service.currentTime$.value).toEqual(58);
+    }, 2000);
+
+    setTimeout(() => {
       expect(service.currentTime$.value).toEqual(58);
       done();
     }, 2000);
